@@ -5,7 +5,7 @@ import plotly.express as px
 # 1º Add a text explaining what we are going to do
 st.title('Airbnb Analysis')
 # 2º Explore and show the data
-df = pd.read_csv("C:/Users/sborr/Downloads/airbnb.csv")
+df = pd.read_csv("airbnb.csv")
 
 # 3º Create a table with selected columns
 df_select = df[['name', 'neighbourhood_group', 'neighbourhood', 'price', 'reviews_per_month']]
