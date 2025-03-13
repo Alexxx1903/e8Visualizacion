@@ -8,7 +8,7 @@ st.set_page_config(layout="wide")
 st.title('AirBnb Analysis2')
 
 ## 2º Explore and show the data
-df = pd.read_csv("C:/Users/aleja/Desktop/cristianismo/airbnb.csv")
+df = pd.read_csv("airbnb.csv")
 
 ## 3º Create a table with the name of the apartment, neighbourhood_group, neighbourhood, price and reviews_per_month
 
