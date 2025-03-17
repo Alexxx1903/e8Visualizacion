@@ -2,24 +2,23 @@ import streamlit as st
 import pandas as pd
 import plotly.express as px
 
-st.title("Exercise Visualization: Airbnb Analysis")
-@st.cache_data
+st.title("Alejandro's Airbnb Analysis")
 def load_data():
-    df = pd.read_csv("airbnb.csv")  # Ensure this file is in the same directory as the script
+    df = pd.read_csv("airbnb.csv") 
     df = df.rename(columns={"room_type": "listing_type", "neighbourhood": "neighborhood"})
-    df.dropna(subset=["price"], inplace=True)  # Remove rows without price
+    df.dropna(subset=["price"], inplace=True)
     return df
 
 df = load_data()
 
-st.sidebar.header("Filters")
-listing_types = st.sidebar.multiselect("Select listing types", df["listing_type"].unique(), default=df["listing_type"].unique())
-neighborhoods = st.sidebar.multiselect("Select neighborhoods", df["neighborhood"].unique(), default=df["neighborhood"].unique())
+st.sidebar.header("Airbnb Filters")
+listing_types = st.sidebar.multiselect("Select the listing types", df["listing_type"].unique(), default=df["listing_type"].unique())
+neighborhoods = st.sidebar.multiselect("Select the neighborhoods", df["neighborhood"].unique(), default=df["neighborhood"].unique())
 filtered_df = df[(df["listing_type"].isin(listing_types)) & (df["neighborhood"].isin(neighborhoods))]
 
 
-tab1, tab2 = st.tabs(["Analysis", "Simulator"])
-with tab1:
+analysis, simu = st.tabs(["Analysis", "Simulator for extra points"])
+with analysis:
     col1, col2 = st.columns(2)
     with col1:
         fig1 = px.box(filtered_df, x="listing_type", y="minimum_nights", title="Minimum nights by listing type")
@@ -36,7 +35,7 @@ with tab1:
     fig5 = px.scatter(filtered_df, x="availability_365", y="price", color="listing_type", title="Availability vs Price")
     st.plotly_chart(fig5)
 
-with tab2:
+with simu:
     st.header("Price Simulator")
     selected_neighborhood = st.selectbox("Select a neighborhood", df["neighborhood"].unique())
     selected_type = st.selectbox("Select listing type", df["listing_type"].unique())
@@ -44,7 +43,6 @@ with tab2:
     similar_listings = df[(df["neighborhood"] == selected_neighborhood) & (df["listing_type"] == selected_type) & (df["minimum_nights"] >= num_nights)]
     price_range = (similar_listings["price"].quantile(0.25), similar_listings["price"].quantile(0.75))
     
-    st.write(f"Recommended price range: ${price_range[0]:.2f} - ${price_range[1]:.2f}")
+    st.write(f"Recommended price range: ${price_range[0]:.1f} - ${price_range[1]:.1f}")
 
-st.sidebar.markdown("## Instructions")
-st.sidebar.info("Upload this code to Streamlit Cloud and submit the link on Moodle.")
+
