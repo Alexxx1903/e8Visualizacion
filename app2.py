@@ -31,18 +31,33 @@ fig = px.box(df_select, x='neighbourhood', y='price', title="Price Distribution 
 st.plotly_chart(fig)
 
 
-## 5º Instead of table, do it in a plotly chart, in the hover include the price
+# Sidebar Filters
+st.sidebar.header("Filters")
+neighborhoods = st.sidebar.multiselect("Select Neighborhoods", df['neighbourhood'].unique(), default=df['neighbourhood'].unique())
+room_types = st.sidebar.multiselect("Select Room Types", df['room_type'].unique(), default=df['room_type'].unique())
 
+# Apply Filters
+df_filtered = df[(df['neighbourhood'].isin(neighborhoods)) & (df['room_type'].isin(room_types))]
 
+# Tabs
+tab1, tab2 = st.tabs(["Listing Analysis", "Review Trends"])
 
-## 6º Instead of Top 10, make it a choice for the user
+# Tab 1: Listing Analysis
+with tab1:
+    st.header("Listing Type vs. Number of People")
+    fig1 = px.box(df_filtered, x='room_type', y='minimum_nights', color='room_type', title="Minimum Nights by Listing Type")
+    st.plotly_chart(fig1)
 
+    st.header("Price Distribution by Listing Type")
+    fig2 = px.box(df_filtered, x='room_type', y='price', color='room_type', title="Price Distribution by Listing Type")
+    st.plotly_chart(fig2)
 
-## 7º Create a boxplot for the prices for Neighbourhood groups
-
-
-
-## 8º Create a boxplot for the prices for neighbourhood after selecting one neighbourhood group
+# Tab 2: Review Trends
+with tab2:
+    st.header("Top Reviewed Apartments by Neighborhood")
+    top_reviews = df_filtered.groupby(['neighbourhood', 'name'])['reviews_per_month'].max().reset_index()
+    fig3 = px.bar(top_reviews, x='neighbourhood', y='reviews_per_month', color='name', title="Top Apartments by Reviews per Month")
+    st.plotly_chart(fig3)
 
 
 ## 9º Create a map with all the listings in that neighbourhood
