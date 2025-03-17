@@ -3,7 +3,7 @@ import pandas as pd
 import plotly.express as px
 
 # 1º Add a text explaining what we are going to do
-st.title('Airbnb Analysis')
+st.title('Airbnb Analysisssss')
 # 2º Explore and show the data
 df = pd.read_csv('airbnb.csv')
 
