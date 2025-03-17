@@ -21,7 +21,7 @@ analysis, simu = st.tabs(["Analysis", "Simulator for extra points"])
 with analysis:
     col1, col2 = st.columns(2)
     with col1:
-        fig1 = px.box(filtered_df, x="listing_type", y="minimum_nights", title="Minimum nights by listing type")
+        fig1 = px.box(filtered_df, x="listing_type", y="minimum_nights", title="Minimum nights by listing type",color_discrete_sequence=["#FF5733", "#33FF57", "#3357FF"])
         st.plotly_chart(fig1)
     with col2:
         fig2 = px.box(filtered_df, x="listing_type", y="price", title="Price by listing type")
