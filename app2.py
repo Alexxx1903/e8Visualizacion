@@ -7,69 +7,18 @@ st.title('Airbnb Analysisssss')
 # 2º Explore and show the data
 df = pd.read_csv('airbnb.csv')
 
-# 3º Create a table with selected columns
-df_select = df[['name', 'neighbourhood_group', 'neighbourhood', 'price', 'reviews_per_month']]
+st.sidebar.title("Sidebar Navigation")
 
+# Create Sidebar Tabs using Radio Buttons
+sidebar_tab = st.sidebar.radio("Choose a tab:", ["Filters", "Settings"])
 
-st.dataframe(
-    df_select.head(),
-    column_config={
-        'name': 'Apartment Name',
-        'price': st.column_config.NumberColumn(
-            label='Price ($)',
-            format='%.2f'
-        ),
-        'reviews_per_month': st.column_config.ProgressColumn(
-            label='Notas por mes',
-            format='%d'  
-        )
-    }
-)
+if sidebar_tab == "Filters":
+    st.sidebar.subheader("Filter Options")
+    neighborhoods = st.sidebar.multiselect("Select Neighborhoods", ["Centro", "Latina", "Salamanca"])
+    room_types = st.sidebar.multiselect("Select Room Types", ["Entire home/apt", "Private room", "Shared room"])
 
-# 4º Represent the top 10 hosts with the most Airbnb listings
-fig = px.box(df_select, x='neighbourhood', y='price', title="Price Distribution by Neighbourhood")
-st.plotly_chart(fig)
+elif sidebar_tab == "Settings":
+    st.sidebar.subheader("App Settings")
+    dark_mode = st.sidebar.toggle("Enable Dark Mode")
+    notifications = st.sidebar.checkbox("Enable Notifications")
 
-
-# Sidebar Filters
-st.sidebar.header("Filters")
-neighborhoods = st.sidebar.multiselect("Select Neighborhoods", df['neighbourhood'].unique(), default=df['neighbourhood'].unique())
-room_types = st.sidebar.multiselect("Select Room Types", df['room_type'].unique(), default=df['room_type'].unique())
-
-# Apply Filters
-df_filtered = df[(df['neighbourhood'].isin(neighborhoods)) & (df['room_type'].isin(room_types))]
-
-# Tabs
-tab1, tab2 = st.tabs(["Listing Analysis", "Review Trends"])
-
-# Tab 1: Listing Analysis
-with tab1:
-    st.header("Listing Type vs. Number of People")
-    fig1 = px.box(df_filtered, x='room_type', y='minimum_nights', color='room_type', title="Minimum Nights by Listing Type")
-    st.plotly_chart(fig1)
-
-    st.header("Price Distribution by Listing Type")
-    fig2 = px.box(df_filtered, x='room_type', y='price', color='room_type', title="Price Distribution by Listing Type")
-    st.plotly_chart(fig2)
-
-# Tab 2: Review Trends
-with tab2:
-    st.header("Top Reviewed Apartments by Neighborhood")
-    top_reviews = df_filtered.groupby(['neighbourhood', 'name'])['reviews_per_month'].max().reset_index()
-    fig3 = px.bar(top_reviews, x='neighbourhood', y='reviews_per_month', color='name', title="Top Apartments by Reviews per Month")
-    st.plotly_chart(fig3)
-
-
-## 9º Create a map with all the listings in that neighbourhood
-st.sidebar.title("Navigation")
-selected_tab = st.sidebar.radio("Choose a tab:", ["Listing Analysis", "Review Trends"])
-
-if selected_tab == "Listing Analysis":
-    st.header("Listing Type vs. Number of People")
-    fig1 = px.box(df_filtered, x='room_type', y='minimum_nights', color='room_type', title="Minimum Nights by Listing Type")
-    st.plotly_chart(fig1)
-
-elif selected_tab == "Review Trends":
-    st.header("Top Reviewed Apartments by Neighborhood")
-
-## 10º Create a new tab
