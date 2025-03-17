@@ -24,7 +24,7 @@ with analysis:
         fig1 = px.box(filtered_df, x="listing_type", y="minimum_nights", title="Minimum nights by listing type",color_discrete_sequence=["#FF5733", "#33FF57", "#3357FF"])
         st.plotly_chart(fig1)
     with col2:
-        fig2 = px.box(filtered_df, x="listing_type", y="price", title="Price by listing type")
+        fig2 = px.box(filtered_df, x="listing_type", y="price", title="Price by listing type",color_discrete_sequence=["#33FF57", "#33FF57", "#3357FF"])
         st.plotly_chart(fig2)
     
     top_reviews = filtered_df.groupby(["neighborhood", "listing_type"]).agg({"reviews_per_month": "sum"}).reset_index()
