@@ -29,7 +29,7 @@ with analysis:
     
     top_reviews = filtered_df.groupby(["neighborhood", "listing_type"]).agg({"reviews_per_month": "sum"}).reset_index()
     fig3 = px.bar(top_reviews, x="neighborhood", y="reviews_per_month", color="listing_type", title="Most reviewed apartments per month by neighborhood",color_discrete_sequence=["#FF5733", "#33FF57", "#3357FF"])
-    st.plotly_chart(fig3)ç
+    st.plotly_chart(fig3)
     fig5 = px.scatter(filtered_df, x="availability_365", y="price", color="listing_type", title="Availability vs Price")
     st.plotly_chart(fig5)
     fig4 = px.box(filtered_df, x="listing_type", y="reviews_per_month", title="Reviews per Month by Listing Type",color_discrete_sequence=["#FF5733", "#33FF57", "#3357FF"])
