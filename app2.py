@@ -61,6 +61,14 @@ with tab2:
 
 
 ## 9º Create a map with all the listings in that neighbourhood
+st.sidebar.title("Navigation")
+selected_tab = st.sidebar.radio("Choose a tab:", ["Listing Analysis", "Review Trends"])
 
+if selected_tab == "Listing Analysis":
+    st.header("Listing Type vs. Number of People")
+    # Add your Listing Analysis content here...
+
+elif selected_tab == "Review Trends":
+    st.header("Top Reviewed Apartments by Neighborhood")
 
 ## 10º Create a new tab
