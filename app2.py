@@ -46,3 +46,6 @@ with simu:
     st.write(f"Recommended price range: ${price_range[0]:.1f} - ${price_range[1]:.1f}")
 
 
+secondaryBackgroundColor = "#333333"
+
+
