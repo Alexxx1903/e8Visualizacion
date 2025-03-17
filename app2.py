@@ -2,7 +2,7 @@ import streamlit as st
 import pandas as pd
 import plotly.express as px
 
-st.title("Alejandro's Airbnb Analysis")
+st.title("Alejandro Gomez Lazaro - 202304633  Airbnb Analysis")
 def load_data():
     df = pd.read_csv("airbnb.csv") 
     df = df.rename(columns={"room_type": "listing_type", "neighbourhood": "neighborhood"})
