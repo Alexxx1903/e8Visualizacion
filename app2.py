@@ -66,7 +66,8 @@ selected_tab = st.sidebar.radio("Choose a tab:", ["Listing Analysis", "Review Tr
 
 if selected_tab == "Listing Analysis":
     st.header("Listing Type vs. Number of People")
-    # Add your Listing Analysis content here...
+    fig1 = px.box(df_filtered, x='room_type', y='minimum_nights', color='room_type', title="Minimum Nights by Listing Type")
+    st.plotly_chart(fig1)
 
 elif selected_tab == "Review Trends":
     st.header("Top Reviewed Apartments by Neighborhood")
