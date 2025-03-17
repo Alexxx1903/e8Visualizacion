@@ -39,7 +39,7 @@ with simu:
     st.header("Price Simulator")
     selected_neighborhood = st.selectbox("Select a neighborhood", df["neighborhood"].unique())
     selected_type = st.selectbox("Select listing type", df["listing_type"].unique())
-    num_nights = st.slider("Number of nights", 1, 30, 2)
+    num_nights = st.slider("Number of nights", 1, 60, 2)
     similar_listings = df[(df["neighborhood"] == selected_neighborhood) & (df["listing_type"] == selected_type) & (df["minimum_nights"] >= num_nights)]
     price_range = (similar_listings["price"].quantile(0.25), similar_listings["price"].quantile(0.75))
     
